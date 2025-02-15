@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Improving Data Accuracy in CRM using AI</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .prediction-card {
+      margin-top: 10px;
+      padding: 15px;
+      background: #e9ecef;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    canvas {
+      background: #f8f9fa;
+      border-radius: 5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #007BFF;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Improving Data Accuracy in CRM using AI</h1>
+    
+    <!-- Prediction Section -->
+    <div class="section">
+      <h2>Prediction Summary</h2>
+      <button onclick="fetchPrediction()">Get Prediction</button>
+      <div id="predictionResult" class="prediction-card">No prediction yet.</div>
+    </div>
+    
+    <!-- Data Visualization Section -->
+    <div class="section chart-grid">
+      <div><canvas id="lineChart"></canvas></div>
+      <div><canvas id="pieChart"></canvas></div>
+      <div><canvas id="barChart"></canvas></div>
+    </div>
+    
+    <!-- Recent Predictions Section -->
+    <div class="section">
+      <h2>Recent Predictions</h2>
+      <table id="recentPredictions">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Year of Birth</th>
+            <th>Income</th>
+          </tr>
+          <tr>
+          <td>1</td>  
+          <td>1985</td>                                 
+          <td>$55,000</td>                               
+        </tr>
+        </thead>
+        <tbody>
+          <!-- Predictions will be dynamically inserted here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    function fetchPrediction() {
+      fetch('/predict')
+        .then(response => response.json())
+        .then(data => {
+          const predictionData = data.predictions[0].values[0][0];
+          document.getElementById('predictionResult').innerHTML = `
+            <strong>Prediction Result:</strong> ${predictionData === 1 ? "Positive Outcome[1]" : "Negative Outcome"}
+          `;
+        })
+        .catch(error => {
+          console.error('Error fetching prediction:', error);
+          document.getElementById('predictionResult').innerText = 'Failed to fetch prediction.';
+        });
+    }
+  </script>
+  
+</body>
+</html>
